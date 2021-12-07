@@ -7,4 +7,5 @@
     <string name="add">Add</string>
     <string name="outcome">Outcome</string>
     <string name="income">Income</string>
+    <string name="total">Total</string>
 </resources>
