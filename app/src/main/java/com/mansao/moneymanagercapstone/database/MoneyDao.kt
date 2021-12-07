@@ -5,7 +5,7 @@ import androidx.room.*
 
 @Dao
 interface MoneyDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(money: Money)
 
     @Update
