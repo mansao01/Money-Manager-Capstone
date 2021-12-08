@@ -10,8 +10,7 @@ import kotlinx.parcelize.Parcelize
 @Entity
 @Parcelize
 data class Money(
-    @PrimaryKey
-    @NonNull
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var id: Int = 0,
 
