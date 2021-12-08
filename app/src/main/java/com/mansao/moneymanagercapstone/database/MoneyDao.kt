@@ -1,19 +1,21 @@
 package com.mansao.moneymanagercapstone.database
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 
 @Dao
 interface MoneyDao {
+    @Query("SELECT * FROM money")
+    fun getAllData() : DataSource.Factory<Int, Money>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(money: Money)
+    fun insertData(money: Money)
 
     @Update
     fun update(money: Money)
 
     @Delete
-    fun delete(money: Money)
-
-    @Query("SELECT * FROM money")
-    fun getAllRecord() : LiveData<List<Money>>
+    fun deleteData(money: Money)
 }
