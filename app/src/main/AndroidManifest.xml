@@ -10,13 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MoneyManagerCapstone">
         <activity
-            android:name=".ui.addtask.AddTaskActivity"
-            android:exported="false" />
+            android:name=".ui.addtask.MoneyAddUpdateActivity"
+            android:exported="true" />
+
         <activity
             android:name=".ui.home.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.splashscreen.MainActivity"
+            android:name=".ui.splashscreen.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

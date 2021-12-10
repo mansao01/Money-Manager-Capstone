@@ -13,15 +13,16 @@ abstract class MoneyDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: MoneyDatabase? = null
 
-        fun getInstance(context: Context): MoneyDatabase =
-            INSTANCE?: synchronized(this){
-                Room.databaseBuilder(
-                    context.applicationContext,
-                    MoneyDatabase::class.java,
-                    "money.db"
-                ).build().apply {
-                    INSTANCE = this
+        @JvmStatic
+        fun getDatabase(context: Context): MoneyDatabase {
+            if (INSTANCE == null) {
+                synchronized(MoneyDatabase::class.java) {
+                    INSTANCE = Room.databaseBuilder(context.applicationContext,
+                        MoneyDatabase::class.java, "money_database")
+                        .build()
                 }
             }
+            return INSTANCE as MoneyDatabase
+        }
     }
 }

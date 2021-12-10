@@ -14,14 +14,20 @@ data class Money(
     @ColumnInfo(name = "id")
     var id: Int = 0,
 
-    @ColumnInfo(name ="title")
-    var title: String? = null,
+    @ColumnInfo(name ="title_note")
+    var title_note: String? = null,
 
-    @ColumnInfo(name = "description")
-    var description: String? = null,
+    @ColumnInfo(name = "description_note")
+    var desc_note: String? = null,
 
-    @ColumnInfo(name = "date")
-    var date: String? = null,
+    @ColumnInfo(name = "date_note")
+    var date_note: String? = null,
+
+    @ColumnInfo(name = "title_transaction")
+    var title_transaction: String? = null,
+
+    @ColumnInfo(name = "description_transaction")
+    var desc_transaction: String? = null,
 
     @ColumnInfo(name = "income")
     var income : Int = 0,
