@@ -3,6 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/BelajarProgram/dicoding/Capstone/Money-Manager-Capstone/app/src/main/res/layout/activity_add_task.xml" value="0.11730072463768115" />
+        <entry key="..\:/BelajarProgram/dicoding/Capstone/Money-Manager-Capstone/app/src/main/res/layout/activity_home.xml" value="0.11730072463768115" />
+        <entry key="..\:/BelajarProgram/dicoding/Capstone/Money-Manager-Capstone/app/src/main/res/layout/activity_main.xml" value="0.11730072463768115" />
+        <entry key="..\:/BelajarProgram/dicoding/Capstone/Money-Manager-Capstone/app/src/main/res/layout/activity_money_add_update.xml" value="0.11096014492753623" />
+        <entry key="..\:/BelajarProgram/dicoding/Capstone/Money-Manager-Capstone/app/src/main/res/layout/activity_splash.xml" value="0.1" />
+        <entry key="..\:/BelajarProgram/dicoding/Capstone/Money-Manager-Capstone/app/src/main/res/layout/item_note.xml" value="0.11096014492753623" />
+        <entry key="..\:/BelajarProgram/dicoding/Capstone/Money-Manager-Capstone/app/src/main/res/layout/list_items.xml" value="0.25" />
+        <entry key="..\:/BelajarProgram/dicoding/Capstone/Money-Manager-Capstone/app/src/main/res/menu/menu_form.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/drawable-v24/logo.xml" value="0.11574074074074074" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/layout/activity_add.xml" value="0.10081053698074975" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/layout/activity_add_task.xml" value="0.10054347826086957" />
@@ -12,7 +20,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
