@@ -27,7 +27,14 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
         val mainViewModel = obtainViewModel(this@HomeActivity)
-        mainViewModel.getAllNotes().observe(this, noteObserver)
+        mainViewModel.getAllNotes().observe(this, { list ->
+            adapter.setListNotes(list)
+            if (list.isNotEmpty()) {
+                binding?.imgNull?.visibility = View.GONE
+            } else {
+                binding?.imgNull?.visibility = View.VISIBLE
+            }
+        })
 
         adapter = MoneyAdapter(this@HomeActivity)
 
@@ -69,11 +76,7 @@ class HomeActivity : AppCompatActivity() {
         val factory = ViewModelFactory.getInstance(activity.application)
         return ViewModelProvider(activity, factory).get(HomeViewModel::class.java)
     }
-    private val noteObserver = Observer<List<Money>> { noteList ->
-        if (noteList != null) {
-            adapter.setListNotes(noteList)
-        }
-    }
+
     private fun showSnackbarMessage(message: String) {
         Snackbar.make(binding?.root as View, message, Snackbar.LENGTH_SHORT).show()
     }
