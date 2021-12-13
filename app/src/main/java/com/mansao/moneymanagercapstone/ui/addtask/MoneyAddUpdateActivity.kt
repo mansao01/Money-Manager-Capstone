@@ -3,7 +3,6 @@ package com.mansao.moneymanagercapstone.ui.addtask
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.SyncStateContract.Helpers.update
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
@@ -13,20 +12,9 @@ import com.mansao.moneymanagercapstone.database.Money
 import com.mansao.moneymanagercapstone.databinding.ActivityMoneyAddUpdateBinding
 import com.mansao.moneymanagercapstone.helper.DateHelper
 import com.mansao.moneymanagercapstone.helper.ViewModelFactory
+import com.mansao.moneymanagercapstone.ui.addtransacation.AddTransaction
 
 class MoneyAddUpdateActivity : AppCompatActivity() {
-
-    companion object {
-        const val EXTRA_NOTE = "extra_note"
-        const val EXTRA_POSITION = "extra_position"
-        const val REQUEST_ADD = 100
-        const val RESULT_ADD = 101
-        const val REQUEST_UPDATE = 200
-        const val RESULT_UPDATE = 201
-        const val RESULT_DELETE = 301
-        const val ALERT_DIALOG_CLOSE = 10
-        const val ALERT_DIALOG_DELETE = 20
-    }
 
     private var isEdit = false
     private var note: Money? = null
@@ -100,6 +88,10 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
                 }
             }
         }
+        binding?.fabAddTransaction?.setOnClickListener {
+            val intent = Intent(this, AddTransaction::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -158,5 +150,17 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
     private fun obtainViewModel(activity: AppCompatActivity): MoneyAddUpdateViewModel {
         val factory = ViewModelFactory.getInstance(activity.application)
         return ViewModelProvider(activity, factory).get(MoneyAddUpdateViewModel::class.java)
+    }
+
+    companion object {
+        const val EXTRA_NOTE = "extra_note"
+        const val EXTRA_POSITION = "extra_position"
+        const val REQUEST_ADD = 100
+        const val RESULT_ADD = 101
+        const val REQUEST_UPDATE = 200
+        const val RESULT_UPDATE = 201
+        const val RESULT_DELETE = 301
+        const val ALERT_DIALOG_CLOSE = 10
+        const val ALERT_DIALOG_DELETE = 20
     }
 }
