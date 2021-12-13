@@ -10,9 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MoneyManagerCapstone">
         <activity
+            android:name=".ui.addtransacation.AddTransaction"
+            android:exported="false" />
+        <activity
             android:name=".ui.addtask.MoneyAddUpdateActivity"
             android:exported="true" />
-
         <activity
             android:name=".ui.home.HomeActivity"
             android:exported="false" />
