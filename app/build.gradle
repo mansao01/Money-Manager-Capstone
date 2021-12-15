@@ -37,6 +37,12 @@ android {
 }
 
 dependencies {
+    ext{
+        junit_version = "4.13.1"
+        ext_junit_version = "1.1.2"
+        espresso_version = '3.3.0'
+        runner_version = '1.2.0'
+    }
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.0'
@@ -53,4 +59,9 @@ dependencies {
     kapt "androidx.room:room-compiler:2.3.0"
 
     implementation "androidx.paging:paging-runtime:2.1.1"
+
+    testImplementation "junit:junit:$junit_version"
+    androidTestImplementation "androidx.test.ext:junit:$ext_junit_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$espresso_version"
 }

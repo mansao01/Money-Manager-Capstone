@@ -8,7 +8,7 @@
     tools:context=".ui.home.HomeActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_notes"
+        android:id="@+id/rv_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,7 +25,7 @@
         android:contentDescription="@string/button_add"
         android:foregroundGravity="bottom"
         app:fabSize="normal"
-        app:layout_anchor="@id/rv_notes"
+        app:layout_anchor="@id/rv_list"
         app:layout_anchorGravity="bottom|end"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

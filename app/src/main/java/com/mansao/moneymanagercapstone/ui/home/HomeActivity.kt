@@ -38,9 +38,9 @@ class HomeActivity : AppCompatActivity() {
 
         adapter = MoneyAdapter(this@HomeActivity)
 
-        binding?.rvNotes?.layoutManager = LinearLayoutManager(this)
-        binding?.rvNotes?.setHasFixedSize(true)
-        binding?.rvNotes?.adapter = adapter
+        binding?.rvList?.layoutManager = LinearLayoutManager(this)
+        binding?.rvList?.setHasFixedSize(true)
+        binding?.rvList?.adapter = adapter
 
         binding?.fabAdd?.setOnClickListener { view ->
             if (view.id == R.id.fab_add) {
