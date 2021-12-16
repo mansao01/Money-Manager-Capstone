@@ -1,13 +1,10 @@
 package com.mansao.moneymanagercapstone.repository
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.LiveData
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
-import com.mansao.moneymanagercapstone.database.Money
-import com.mansao.moneymanagercapstone.database.MoneyDao
-import com.mansao.moneymanagercapstone.database.MoneyDatabase
+import com.mansao.moneymanagercapstone.database.money.Money
+import com.mansao.moneymanagercapstone.database.money.MoneyDao
+import com.mansao.moneymanagercapstone.database.money.MoneyDatabase
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 

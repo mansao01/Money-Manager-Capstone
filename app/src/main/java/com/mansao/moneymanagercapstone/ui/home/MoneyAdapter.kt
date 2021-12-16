@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.mansao.moneymanagercapstone.database.Money
+import com.mansao.moneymanagercapstone.database.money.Money
 import com.mansao.moneymanagercapstone.databinding.ItemNoteBinding
-import com.mansao.moneymanagercapstone.helper.MoneyDiffCallback
-import com.mansao.moneymanagercapstone.ui.addtask.MoneyAddUpdateActivity
+import com.mansao.moneymanagercapstone.helper.money.MoneyDiffCallback
+import com.mansao.moneymanagercapstone.ui.addtask.money.MoneyAddUpdateActivity
 
 class MoneyAdapter internal constructor(private val activity: Activity) : RecyclerView.Adapter<MoneyAdapter.NoteViewHolder>() {
     private val listNotes = ArrayList<Money>()

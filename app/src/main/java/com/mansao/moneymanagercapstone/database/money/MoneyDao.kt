@@ -1,7 +1,8 @@
-package com.mansao.moneymanagercapstone.database
+package com.mansao.moneymanagercapstone.database.money
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.mansao.moneymanagercapstone.database.money.Money
 
 @Dao
 interface MoneyDao {

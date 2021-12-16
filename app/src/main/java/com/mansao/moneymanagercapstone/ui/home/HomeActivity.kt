@@ -4,15 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mansao.moneymanagercapstone.R
-import com.mansao.moneymanagercapstone.database.Money
 import com.mansao.moneymanagercapstone.databinding.ActivityHomeBinding
-import com.mansao.moneymanagercapstone.helper.ViewModelFactory
-import com.mansao.moneymanagercapstone.ui.addtask.MoneyAddUpdateActivity
+import com.mansao.moneymanagercapstone.helper.money.ViewModelFactory
+import com.mansao.moneymanagercapstone.ui.addtask.money.MoneyAddUpdateActivity
 
 class HomeActivity : AppCompatActivity() {
 

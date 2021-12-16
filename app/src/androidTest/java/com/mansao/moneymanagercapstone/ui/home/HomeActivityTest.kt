@@ -10,7 +10,7 @@ import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
 import androidx.test.runner.lifecycle.Stage
 import com.mansao.moneymanagercapstone.R
-import com.mansao.moneymanagercapstone.ui.addtask.MoneyAddUpdateActivity
+import com.mansao.moneymanagercapstone.ui.addtask.money.MoneyAddUpdateActivity
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
