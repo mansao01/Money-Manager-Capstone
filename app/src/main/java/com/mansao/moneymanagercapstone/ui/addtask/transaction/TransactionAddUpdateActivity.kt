@@ -1,4 +1,4 @@
-package com.mansao.moneymanagercapstone.ui.addtask
+package com.mansao.moneymanagercapstone.ui.addtask.transaction
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,45 +8,57 @@ import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.mansao.moneymanagercapstone.R
-import com.mansao.moneymanagercapstone.database.Money
-import com.mansao.moneymanagercapstone.databinding.ActivityMoneyAddUpdateBinding
+import com.mansao.moneymanagercapstone.database.transaction.Transaction
+import com.mansao.moneymanagercapstone.databinding.ActivityTransactionAddUpdateBinding
 import com.mansao.moneymanagercapstone.helper.DateHelper
-import com.mansao.moneymanagercapstone.helper.ViewModelFactory
-import com.mansao.moneymanagercapstone.ui.addtransacation.AddTransaction
+import com.mansao.moneymanagercapstone.helper.transaction.ViewModelTransactionFactory
 
-class MoneyAddUpdateActivity : AppCompatActivity() {
+class TransactionAddUpdateActivity : AppCompatActivity() {
+    companion object {
+        const val EXTRA_NOTE = "extra_note"
+        const val EXTRA_POSITION = "extra_position"
+        const val REQUEST_ADD = 100
+        const val RESULT_ADD = 101
+        const val REQUEST_UPDATE = 200
+        const val RESULT_UPDATE = 201
+        const val RESULT_DELETE = 301
+        const val ALERT_DIALOG_CLOSE = 10
+        const val ALERT_DIALOG_DELETE = 20
+    }
 
     private var isEdit = false
-    private var note: Money? = null
+    private var transaction: Transaction? = null
     private var position = 0
 
-    private lateinit var noteAddUpdateViewModel: MoneyAddUpdateViewModel
-    private var _activityNoteAddUpdateBinding: ActivityMoneyAddUpdateBinding? = null
-    private val binding get() = _activityNoteAddUpdateBinding
+    private lateinit var transactionAddUpdateViewModel: TransactionAddUpdateViewModel
+    private var _activityTransactionAddUpdateBinding: ActivityTransactionAddUpdateBinding? = null
+    private val binding get() = _activityTransactionAddUpdateBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        _activityNoteAddUpdateBinding = ActivityMoneyAddUpdateBinding.inflate(layoutInflater)
+        _activityTransactionAddUpdateBinding = ActivityTransactionAddUpdateBinding.inflate(layoutInflater)
         setContentView(binding?.root)
-        noteAddUpdateViewModel = obtainViewModel(this@MoneyAddUpdateActivity)
+        transactionAddUpdateViewModel = obtainTransactionViewModel(this@TransactionAddUpdateActivity)
 
-        note = intent.getParcelableExtra(EXTRA_NOTE)
-        if (note != null) {
+        transaction = intent.getParcelableExtra(EXTRA_NOTE)
+        if (transaction != null) {
             position = intent.getIntExtra(EXTRA_POSITION, 0)
             isEdit = true
         } else {
-            note = Money()
+            transaction = Transaction()
         }
         val actionBarTitle: String
         val btnTitle: String
         if (isEdit) {
             actionBarTitle = getString(R.string.change)
             btnTitle = getString(R.string.update)
-            if (note != null) {
-                note?.let { note ->
-                    binding?.edtTitle?.setText(note.title_note)
-                    binding?.edtDescription?.setText(note.desc_note)
+            if (transaction != null) {
+                transaction?.let { transaction ->
+                    binding?.edtTitle?.setText(transaction.title_transaction)
+                    binding?.edtDescription?.setText(transaction.desc_transaction)
+                    binding?.edtIncome?.setText(transaction.income)
+                    binding?.edtOutcome?.setText(transaction.outcome)
                 }
             }
         } else {
@@ -61,36 +73,40 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
         binding?.btnSubmit?.setOnClickListener {
             val title = binding?.edtTitle?.text.toString().trim()
             val desc = binding?.edtDescription?.text.toString().trim()
+            val income = binding?.edtIncome?.text.toString().trim()
+            val outcome = binding?.edtOutcome?.text.toString().trim()
             if (title.isEmpty()) {
                 binding?.edtTitle?.error = getString(R.string.empty)
             } else if (desc.isEmpty()) {
                 binding?.edtDescription?.error = getString(R.string.empty)
+            } else if (income.isEmpty()){
+                binding?.edtIncome?.error = getString(R.string.empty)
+            } else if (outcome.isEmpty()){
+                binding?.edtOutcome?.error = getString(R.string.empty)
             } else {
-                note.let { note ->
-                    note?.title_note = title
-                    note?.desc_note = desc
+                transaction.let { transaction ->
+                    transaction?.title_transaction = title
+                    transaction?.desc_transaction = desc
+                    transaction?.income = income
+                    transaction?.outcome = outcome
                 }
                 val intent = Intent().apply {
-                    putExtra(EXTRA_NOTE, note)
+                    putExtra(EXTRA_NOTE, transaction)
                     putExtra(EXTRA_POSITION, position)
                 }
                 if (isEdit) {
-                    noteAddUpdateViewModel.update(note as Money)
+                    transactionAddUpdateViewModel.update(transaction as Transaction)
                     setResult(RESULT_UPDATE, intent)
                     finish()
                 } else {
-                    note.let { note ->
-                        note?.date_note = DateHelper.getCurrentDate()
+                    transaction.let { transaction ->
+                        transaction?.date_transaction = DateHelper.getCurrentDate()
                     }
-                    noteAddUpdateViewModel.insert(note as Money)
+                    transactionAddUpdateViewModel.insert(transaction as Transaction)
                     setResult(RESULT_ADD, intent)
                     finish()
                 }
             }
-        }
-        binding?.fabAddTransaction?.setOnClickListener {
-            val intent = Intent(this, AddTransaction::class.java)
-            startActivity(intent)
         }
     }
 
@@ -113,7 +129,7 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        _activityNoteAddUpdateBinding = null
+        _activityTransactionAddUpdateBinding = null
     }
 
     private fun showAlertDialog(type: Int) {
@@ -134,7 +150,7 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
             setCancelable(false)
             setPositiveButton(getString(R.string.yes)) { _, _ ->
                 if (!isDialogClose) {
-                    noteAddUpdateViewModel.delete(note as Money)
+                    transactionAddUpdateViewModel.delete(transaction as Transaction)
                     val intent = Intent()
                     intent.putExtra(EXTRA_POSITION, position)
                     setResult(RESULT_DELETE, intent)
@@ -147,20 +163,8 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
-    private fun obtainViewModel(activity: AppCompatActivity): MoneyAddUpdateViewModel {
-        val factory = ViewModelFactory.getInstance(activity.application)
-        return ViewModelProvider(activity, factory).get(MoneyAddUpdateViewModel::class.java)
-    }
-
-    companion object {
-        const val EXTRA_NOTE = "extra_note"
-        const val EXTRA_POSITION = "extra_position"
-        const val REQUEST_ADD = 100
-        const val RESULT_ADD = 101
-        const val REQUEST_UPDATE = 200
-        const val RESULT_UPDATE = 201
-        const val RESULT_DELETE = 301
-        const val ALERT_DIALOG_CLOSE = 10
-        const val ALERT_DIALOG_DELETE = 20
+    private fun obtainTransactionViewModel(activity: AppCompatActivity): TransactionAddUpdateViewModel {
+        val factory = ViewModelTransactionFactory.getInstance(activity.application)
+        return ViewModelProvider(activity, factory).get(TransactionAddUpdateViewModel::class.java)
     }
 }

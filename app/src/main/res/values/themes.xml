@@ -20,4 +20,13 @@
         <item name="cornerSizeBottomRight">70%</item>
         <!--<item name="cornerFamilyBottomRight">cut</item>-->
     </style>
+
+    <style name="Theme.MoneyManagerCapstone.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.MoneyManagerCapstone.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.MoneyManagerCapstone.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
