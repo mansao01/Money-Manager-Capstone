@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.mansao.moneymanagercapstone.database.money.Transaction
+import com.mansao.moneymanagercapstone.database.Transaction
 import com.mansao.moneymanagercapstone.databinding.ListItemsBinding
 import com.mansao.moneymanagercapstone.helper.transaction.TransactionDiffCallback
 import com.mansao.moneymanagercapstone.ui.addtask.transaction.TransactionAddUpdateActivity
@@ -18,7 +18,6 @@ class TransactionAdapter internal constructor(private val activity: Activity) : 
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         this.listTransaction.clear()
         this.listTransaction.addAll(listTransaction)
-        this.notifyDataSetChanged()
         diffResult.dispatchUpdatesTo(this)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {

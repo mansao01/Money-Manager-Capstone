@@ -3,7 +3,9 @@ package com.mansao.moneymanagercapstone.ui.addtask.transaction
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.mansao.moneymanagercapstone.database.money.Transaction
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
+import com.mansao.moneymanagercapstone.database.Transaction
 import com.mansao.moneymanagercapstone.repository.MoneyManagerRepository
 
 class TransactionAddUpdateViewModel(application: Application) : ViewModel() {
@@ -21,8 +23,8 @@ class TransactionAddUpdateViewModel(application: Application) : ViewModel() {
         moneyManagerRepository.deleteTransaction(transaction)
     }
 
-    fun getAllTransaction(typeTransaction: String): LiveData<List<Transaction>> =
-        moneyManagerRepository.getAllTransaction(typeTransaction)
-
+    fun getAllTransaction(sort: String): LiveData<PagedList<Transaction>> {
+        return LivePagedListBuilder(moneyManagerRepository.getAllTransaction(sort), 20).build()
+    }
 
 }
