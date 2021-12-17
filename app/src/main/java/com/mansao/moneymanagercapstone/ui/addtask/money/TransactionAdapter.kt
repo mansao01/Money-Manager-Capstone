@@ -18,6 +18,7 @@ class TransactionAdapter internal constructor(private val activity: Activity) : 
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         this.listTransaction.clear()
         this.listTransaction.addAll(listTransaction)
+        this.notifyDataSetChanged()
         diffResult.dispatchUpdatesTo(this)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
