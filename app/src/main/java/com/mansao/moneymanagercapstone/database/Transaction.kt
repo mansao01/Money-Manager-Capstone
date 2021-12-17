@@ -1,4 +1,4 @@
-package com.mansao.moneymanagercapstone.database.money
+package com.mansao.moneymanagercapstone.database
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo
