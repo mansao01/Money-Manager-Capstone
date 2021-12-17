@@ -1,4 +1,4 @@
-package com.mansao.moneymanagercapstone.database
+package com.mansao.moneymanagercapstone.database.money
 
 import android.content.Context
 import androidx.room.Database
