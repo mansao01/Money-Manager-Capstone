@@ -92,19 +92,6 @@
             tools:text="@string/income"
             android:textColor="@color/more_green_darker"/>
 
-
-        <ImageView
-            android:id="@+id/img_delete"
-            android:layout_width="37dp"
-            android:layout_height="34dp"
-            android:src="@drawable/ic_trash"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.928"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.493" />
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"
             android:layout_width="wrap_content"
@@ -117,7 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="left"
-            app:constraint_referenced_ids="item_container" />
+            app:constraint_referenced_ids="cv_item_transaction" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -2,7 +2,7 @@ package com.mansao.moneymanagercapstone.ui.addtask.money
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
-import com.mansao.moneymanagercapstone.database.money.Money
+import com.mansao.moneymanagercapstone.database.Money
 import com.mansao.moneymanagercapstone.repository.MoneyManagerRepository
 
 class MoneyAddUpdateViewModel (application: Application) : ViewModel() {
