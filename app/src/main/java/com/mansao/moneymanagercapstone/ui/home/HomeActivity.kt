@@ -7,13 +7,12 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.mansao.capstonedraft.helper.ViewModelFactory
 import com.mansao.moneymanagercapstone.R
 import com.mansao.moneymanagercapstone.databinding.ActivityHomeBinding
-import com.mansao.moneymanagercapstone.helper.money.ViewModelFactory
 import com.mansao.moneymanagercapstone.ui.addtask.money.MoneyAddUpdateActivity
 
 class HomeActivity : AppCompatActivity() {
-
     private var _activityMainBinding: ActivityHomeBinding? = null
     private val binding get() = _activityMainBinding
     private lateinit var adapter: MoneyAdapter

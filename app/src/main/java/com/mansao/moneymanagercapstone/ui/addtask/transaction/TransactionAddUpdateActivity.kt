@@ -7,27 +7,18 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
+import com.mansao.capstonedraft.helper.ViewModelFactory
 import com.mansao.moneymanagercapstone.R
-import com.mansao.moneymanagercapstone.database.transaction.Transaction
+import com.mansao.moneymanagercapstone.database.money.Money
+import com.mansao.moneymanagercapstone.database.money.Transaction
 import com.mansao.moneymanagercapstone.databinding.ActivityTransactionAddUpdateBinding
 import com.mansao.moneymanagercapstone.helper.DateHelper
-import com.mansao.moneymanagercapstone.helper.transaction.ViewModelTransactionFactory
 
 class TransactionAddUpdateActivity : AppCompatActivity() {
-    companion object {
-        const val EXTRA_NOTE = "extra_note"
-        const val EXTRA_POSITION = "extra_position"
-        const val REQUEST_ADD = 100
-        const val RESULT_ADD = 101
-        const val REQUEST_UPDATE = 200
-        const val RESULT_UPDATE = 201
-        const val RESULT_DELETE = 301
-        const val ALERT_DIALOG_CLOSE = 10
-        const val ALERT_DIALOG_DELETE = 20
-    }
 
     private var isEdit = false
     private var transaction: Transaction? = null
+    private var dataTypeTransaction: Money? = null
     private var position = 0
 
     private lateinit var transactionAddUpdateViewModel: TransactionAddUpdateViewModel
@@ -69,7 +60,7 @@ class TransactionAddUpdateActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding?.btnSubmit?.text = btnTitle
 
-
+        dataTypeTransaction = intent.getParcelableExtra(EXTRA_DATA)
         binding?.btnSubmit?.setOnClickListener {
             val title = binding?.edtTitle?.text.toString().trim()
             val desc = binding?.edtDescription?.text.toString().trim()
@@ -89,6 +80,7 @@ class TransactionAddUpdateActivity : AppCompatActivity() {
                     transaction?.desc_transaction = desc
                     transaction?.income = income
                     transaction?.outcome = outcome
+                    transaction?.typeTransaction= dataTypeTransaction?.title_note
                 }
                 val intent = Intent().apply {
                     putExtra(EXTRA_NOTE, transaction)
@@ -164,7 +156,21 @@ class TransactionAddUpdateActivity : AppCompatActivity() {
     }
 
     private fun obtainTransactionViewModel(activity: AppCompatActivity): TransactionAddUpdateViewModel {
-        val factory = ViewModelTransactionFactory.getInstance(activity.application)
+        val factory = ViewModelFactory.getInstance(activity.application)
         return ViewModelProvider(activity, factory).get(TransactionAddUpdateViewModel::class.java)
     }
+
+    companion object {
+        const val EXTRA_NOTE = "extra_note"
+        const val EXTRA_DATA = "extra_data"
+        const val EXTRA_POSITION = "extra_position"
+        const val REQUEST_ADD = 100
+        const val RESULT_ADD = 101
+        const val REQUEST_UPDATE = 200
+        const val RESULT_UPDATE = 201
+        const val RESULT_DELETE = 301
+        const val ALERT_DIALOG_CLOSE = 10
+        const val ALERT_DIALOG_DELETE = 20
+    }
+
 }

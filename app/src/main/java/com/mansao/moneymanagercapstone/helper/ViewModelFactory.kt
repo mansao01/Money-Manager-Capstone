@@ -1,9 +1,10 @@
-package com.mansao.moneymanagercapstone.helper.money
+package com.mansao.capstonedraft.helper
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.mansao.moneymanagercapstone.ui.addtask.money.MoneyAddUpdateViewModel
+import com.mansao.moneymanagercapstone.ui.addtask.transaction.TransactionAddUpdateViewModel
 import com.mansao.moneymanagercapstone.ui.home.HomeViewModel
 
 class ViewModelFactory private constructor(private val mApplication: Application) : ViewModelProvider.NewInstanceFactory() {
@@ -24,11 +25,17 @@ class ViewModelFactory private constructor(private val mApplication: Application
     }
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-            return HomeViewModel(mApplication) as T
-        } else if (modelClass.isAssignableFrom(MoneyAddUpdateViewModel::class.java)) {
-            return MoneyAddUpdateViewModel(mApplication) as T
+        return when {
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
+                HomeViewModel(mApplication) as T
+            }
+            modelClass.isAssignableFrom(MoneyAddUpdateViewModel::class.java) -> {
+                MoneyAddUpdateViewModel(mApplication) as T
+            }
+            modelClass.isAssignableFrom(TransactionAddUpdateViewModel::class.java) -> {
+                TransactionAddUpdateViewModel(mApplication) as T
+            }
+            else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
-        throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }
 }

@@ -7,6 +7,6 @@ import com.mansao.moneymanagercapstone.database.money.Money
 import com.mansao.moneymanagercapstone.repository.MoneyManagerRepository
 
 class HomeViewModel (application: Application) : ViewModel() {
-    private val mNoteRepository: MoneyManagerRepository = MoneyManagerRepository(application)
-    fun getAllNotes(): LiveData<List<Money>> = mNoteRepository.getAllNotes()
+    private val moneyManagerRepository: MoneyManagerRepository = MoneyManagerRepository(application)
+    fun getAllNotes(): LiveData<List<Money>> = moneyManagerRepository.getAllMoney()
 }

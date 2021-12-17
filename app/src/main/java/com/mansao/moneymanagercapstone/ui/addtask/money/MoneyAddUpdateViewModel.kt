@@ -6,14 +6,14 @@ import com.mansao.moneymanagercapstone.database.money.Money
 import com.mansao.moneymanagercapstone.repository.MoneyManagerRepository
 
 class MoneyAddUpdateViewModel (application: Application) : ViewModel() {
-    private val mNoteRepository: MoneyManagerRepository = MoneyManagerRepository(application)
-    fun insert(note: Money) {
-        mNoteRepository.insert(note)
+    private val moneyManagerRepository: MoneyManagerRepository = MoneyManagerRepository(application)
+    fun insert(money: Money) {
+        moneyManagerRepository.insertMoney(money)
     }
-    fun update(note: Money) {
-        mNoteRepository.update(note)
+    fun update(money: Money) {
+        moneyManagerRepository.updateMoney(money)
     }
-    fun delete(note: Money) {
-        mNoteRepository.delete(note)
+    fun delete(money: Money) {
+        moneyManagerRepository.deleteMoney(money)
     }
 }

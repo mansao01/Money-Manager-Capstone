@@ -1,42 +1,29 @@
 package com.mansao.moneymanagercapstone.ui.addtask.money
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.mansao.capstonedraft.helper.ViewModelFactory
 import com.mansao.moneymanagercapstone.R
 import com.mansao.moneymanagercapstone.database.money.Money
-import com.mansao.moneymanagercapstone.database.transaction.Transaction
+import com.mansao.moneymanagercapstone.database.money.Transaction
 import com.mansao.moneymanagercapstone.databinding.ActivityMoneyAddUpdateBinding
 import com.mansao.moneymanagercapstone.helper.DateHelper
-import com.mansao.moneymanagercapstone.helper.money.ViewModelFactory
-import com.mansao.moneymanagercapstone.helper.transaction.ViewModelTransactionFactory
 import com.mansao.moneymanagercapstone.ui.addtask.transaction.TransactionAddUpdateActivity
 import com.mansao.moneymanagercapstone.ui.addtask.transaction.TransactionAddUpdateViewModel
 
 class MoneyAddUpdateActivity : AppCompatActivity() {
 
-    companion object {
-        const val EXTRA_NOTE = "extra_note"
-        const val EXTRA_POSITION = "extra_position"
-        const val REQUEST_ADD = 100
-        const val RESULT_ADD = 101
-        const val REQUEST_UPDATE = 200
-        const val RESULT_UPDATE = 201
-        const val RESULT_DELETE = 301
-        const val ALERT_DIALOG_CLOSE = 10
-        const val ALERT_DIALOG_DELETE = 20
-    }
-
     private var isEdit = false
-    private var note: Money? = null
+    private var money: Money? = null
     private var position = 0
 
     private lateinit var moneyAddUpdateViewModel: MoneyAddUpdateViewModel
@@ -47,27 +34,27 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         _activityMoneyAddUpdateBinding = ActivityMoneyAddUpdateBinding.inflate(layoutInflater)
         setContentView(binding?.root)
         moneyAddUpdateViewModel = obtainViewModel(this@MoneyAddUpdateActivity)
 
-        note = intent.getParcelableExtra(EXTRA_NOTE)
-        if (note != null) {
+
+        money = intent.getParcelableExtra(EXTRA_NOTE)
+        if (money != null) {
             position = intent.getIntExtra(EXTRA_POSITION, 0)
             isEdit = true
         } else {
-            note = Money()
+            money = Money()
         }
         val actionBarTitle: String
         val btnTitle: String
         if (isEdit) {
             actionBarTitle = getString(R.string.change)
             btnTitle = getString(R.string.update)
-            if (note != null) {
-                note?.let { note ->
-                    binding?.edtTitle?.setText(note.title_note)
-                    binding?.edtDescription?.setText(note.desc_note)
+            if (money != null) {
+                money?.let { money ->
+                    binding?.edtTitle?.setText(money.title_note)
+                    binding?.edtDescription?.setText(money.desc_note)
                 }
             }
         } else {
@@ -87,42 +74,49 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
             } else if (desc.isEmpty()) {
                 binding?.edtDescription?.error = getString(R.string.empty)
             } else {
-                note.let { note ->
-                    note?.title_note = title
-                    note?.desc_note = desc
+                money.let { money ->
+                    money?.title_note = title
+                    money?.desc_note = desc
                 }
                 val intent = Intent().apply {
-                    putExtra(EXTRA_NOTE, note)
+                    putExtra(EXTRA_NOTE, money)
                     putExtra(EXTRA_POSITION, position)
                 }
                 if (isEdit) {
-                    moneyAddUpdateViewModel.update(note as Money)
+                    moneyAddUpdateViewModel.update(money as Money)
                     setResult(RESULT_UPDATE, intent)
                     finish()
                 } else {
-                    note.let { note ->
-                        note?.date_note = DateHelper.getCurrentDate()
+                    money.let { money ->
+                        money?.date_note = DateHelper.getCurrentDate()
                     }
-                    moneyAddUpdateViewModel.insert(note as Money)
+                    moneyAddUpdateViewModel.insert(money as Money)
                     setResult(RESULT_ADD, intent)
                     finish()
                 }
             }
         }
 
-        //add transaction
         transactionAddUpdateViewModel = obtainTransactionViewModel(this@MoneyAddUpdateActivity)
         transactionAddUpdateViewModel.getAllTransaction().observe(this, transactionObserver)
 
-        adapterTransaction = TransactionAdapter(this@MoneyAddUpdateActivity)
+        val dataForTypeTransaction = money?.title_note
+//
+//        val outcome = transactionAddUpdateViewModel.getOutcome(dataForTypeTransaction)
+//        val income = dataForTypeTransaction?.let { transactionAddUpdateViewModel.getIncome(it) }
+//
+//        binding?.tvTotalIncome?.text = income.toString()
+//        binding?.tvTotalOutcome?.text = outcome.toString()
 
+        adapterTransaction = TransactionAdapter(this@MoneyAddUpdateActivity)
         binding?.rvNotes?.layoutManager = LinearLayoutManager(this)
         binding?.rvNotes?.setHasFixedSize(true)
         binding?.rvNotes?.adapter = adapterTransaction
 
         binding?.fabAddTransaction?.setOnClickListener { view ->
-            if (view.id == R.id.fab_add) {
+            if (view.id == R.id.fab_add_transaction) {
                 val intent = Intent(this@MoneyAddUpdateActivity, TransactionAddUpdateActivity::class.java)
+                intent.putExtra(TransactionAddUpdateActivity.EXTRA_DATA, money)
                 startActivityForResult(intent, TransactionAddUpdateActivity.REQUEST_ADD)
             }
         }
@@ -168,7 +162,7 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
             setCancelable(false)
             setPositiveButton(getString(R.string.yes)) { _, _ ->
                 if (!isDialogClose) {
-                    moneyAddUpdateViewModel.delete(note as Money)
+                    moneyAddUpdateViewModel.delete(money as Money)
                     val intent = Intent()
                     intent.putExtra(EXTRA_POSITION, position)
                     setResult(RESULT_DELETE, intent)
@@ -181,15 +175,14 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
+
     private fun obtainViewModel(activity: AppCompatActivity): MoneyAddUpdateViewModel {
         val factory = ViewModelFactory.getInstance(activity.application)
         return ViewModelProvider(activity, factory).get(MoneyAddUpdateViewModel::class.java)
     }
 
-    //add transaction
-
     private fun obtainTransactionViewModel(activity: AppCompatActivity): TransactionAddUpdateViewModel {
-        val factory = ViewModelTransactionFactory.getInstance(activity.application)
+        val factory = ViewModelFactory.getInstance(activity.application)
         return ViewModelProvider(activity, factory).get(TransactionAddUpdateViewModel::class.java)
     }
 
@@ -217,5 +210,17 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
     }
     private fun showSnackbarMessage(message: String) {
         Snackbar.make(binding?.root as View, message, Snackbar.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        const val EXTRA_NOTE = "extra_note"
+        const val EXTRA_POSITION = "extra_position"
+        const val REQUEST_ADD = 100
+        const val RESULT_ADD = 101
+        const val REQUEST_UPDATE = 200
+        const val RESULT_UPDATE = 201
+        const val RESULT_DELETE = 301
+        const val ALERT_DIALOG_CLOSE = 10
+        const val ALERT_DIALOG_DELETE = 20
     }
 }

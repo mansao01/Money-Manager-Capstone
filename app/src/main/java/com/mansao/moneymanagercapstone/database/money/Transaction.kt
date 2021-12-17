@@ -1,4 +1,4 @@
-package com.mansao.moneymanagercapstone.database.transaction
+package com.mansao.moneymanagercapstone.database.money
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo
@@ -26,5 +26,8 @@ data class Transaction (
     var income: String? = null,
 
     @ColumnInfo(name = "outcome")
-    var outcome: String? = null
+    var outcome: String? = null,
+
+    @ColumnInfo(name = "type_transaction")
+    var typeTransaction: String? = null
 ) : Parcelable
