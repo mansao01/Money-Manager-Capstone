@@ -1,7 +1,7 @@
 package com.mansao.moneymanagercapstone.helper.transaction
 
 import androidx.recyclerview.widget.DiffUtil
-import com.mansao.moneymanagercapstone.database.Transaction
+import com.mansao.moneymanagercapstone.database.money.Transaction
 
 class TransactionDiffCallback (private val mOldTransactionList: List<Transaction>, private val mNewTransactionList: List<Transaction>) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {

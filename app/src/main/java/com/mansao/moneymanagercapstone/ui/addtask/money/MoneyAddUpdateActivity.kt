@@ -9,16 +9,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mansao.capstonedraft.helper.ViewModelFactory
 import com.mansao.moneymanagercapstone.R
-import com.mansao.moneymanagercapstone.database.Money
-import com.mansao.moneymanagercapstone.database.Transaction
+import com.mansao.moneymanagercapstone.database.money.Money
+import com.mansao.moneymanagercapstone.database.money.Transaction
 import com.mansao.moneymanagercapstone.databinding.ActivityMoneyAddUpdateBinding
 import com.mansao.moneymanagercapstone.helper.DateHelper
-import com.mansao.moneymanagercapstone.helper.SortUtils
 import com.mansao.moneymanagercapstone.ui.addtask.transaction.TransactionAddUpdateActivity
 import com.mansao.moneymanagercapstone.ui.addtask.transaction.TransactionAddUpdateViewModel
 
@@ -100,7 +98,7 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
         }
 
         transactionAddUpdateViewModel = obtainTransactionViewModel(this@MoneyAddUpdateActivity)
-        transactionAddUpdateViewModel.getAllTransaction(SortUtils.NEWEST).observe(this, transactionObserver)
+        transactionAddUpdateViewModel.getAllTransaction().observe(this, transactionObserver)
 
         val dataForTypeTransaction = money?.title_note
 //
@@ -118,31 +116,23 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
         binding?.fabAddTransaction?.setOnClickListener { view ->
             if (view.id == R.id.fab_add_transaction) {
                 val intent = Intent(this@MoneyAddUpdateActivity, TransactionAddUpdateActivity::class.java)
-//                intent.putExtra(TransactionAddUpdateActivity.EXTRA_DATA, money)
+                intent.putExtra(TransactionAddUpdateActivity.EXTRA_DATA, money)
                 startActivityForResult(intent, TransactionAddUpdateActivity.REQUEST_ADD)
             }
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
         if (isEdit) {
             menuInflater.inflate(R.menu.menu_form, menu)
-            menuInflater.inflate(R.menu.menu_main, menu)
         }
         return super.onCreateOptionsMenu(menu)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        var sort = ""
         when (item.itemId) {
             R.id.action_delete -> showAlertDialog(ALERT_DIALOG_DELETE)
             android.R.id.home -> showAlertDialog(ALERT_DIALOG_CLOSE)
-            R.id.action_newest -> sort = SortUtils.NEWEST
-            R.id.action_oldest -> sort = SortUtils.OLDEST
-            R.id.action_random -> sort = SortUtils.RANDOM
         }
-        transactionAddUpdateViewModel.getAllTransaction(sort).observe(this, transactionObserver)
-        item.setChecked(true)
         return super.onOptionsItemSelected(item)
     }
     override fun onBackPressed() {
@@ -213,7 +203,7 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
         }
     }
 
-    private val transactionObserver = Observer<PagedList<Transaction>> { transactionList ->
+    private val transactionObserver = Observer<List<Transaction>> { transactionList ->
         if (transactionList != null) {
             adapterTransaction.setListTransaction(transactionList)
         }
