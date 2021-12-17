@@ -33,7 +33,8 @@ class MoneyManagerRepository(application: Application) {
 
     //transaction
 
-    fun getAllTransaction(): LiveData<List<Transaction>> = moneyDao.getAllTransaction()
+    fun getAllTransaction(typeTransaction: String): LiveData<List<Transaction>> =
+        moneyDao.getAllTransaction(typeTransaction)
 
     fun insertTransaction(transaction: Transaction){
         executorService.execute {

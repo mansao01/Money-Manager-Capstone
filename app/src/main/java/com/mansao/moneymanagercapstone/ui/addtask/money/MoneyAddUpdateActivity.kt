@@ -97,10 +97,10 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
             }
         }
 
-        transactionAddUpdateViewModel = obtainTransactionViewModel(this@MoneyAddUpdateActivity)
-        transactionAddUpdateViewModel.getAllTransaction().observe(this, transactionObserver)
 
         val dataForTypeTransaction = money?.title_note
+        transactionAddUpdateViewModel = obtainTransactionViewModel(this@MoneyAddUpdateActivity)
+        dataForTypeTransaction?.let { transactionAddUpdateViewModel.getAllTransaction(it).observe(this, transactionObserver) }
 //
 //        val outcome = transactionAddUpdateViewModel.getOutcome(dataForTypeTransaction)
 //        val income = dataForTypeTransaction?.let { transactionAddUpdateViewModel.getIncome(it) }

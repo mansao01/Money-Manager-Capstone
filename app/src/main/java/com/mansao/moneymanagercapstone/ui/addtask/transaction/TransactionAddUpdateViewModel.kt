@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.mansao.moneymanagercapstone.database.money.Transaction
 import com.mansao.moneymanagercapstone.repository.MoneyManagerRepository
 
-class TransactionAddUpdateViewModel (application: Application) : ViewModel() {
+class TransactionAddUpdateViewModel(application: Application) : ViewModel() {
     private val moneyManagerRepository: MoneyManagerRepository = MoneyManagerRepository(application)
 
     fun insert(transaction: Transaction) {
@@ -21,8 +21,8 @@ class TransactionAddUpdateViewModel (application: Application) : ViewModel() {
         moneyManagerRepository.deleteTransaction(transaction)
     }
 
-    fun getAllTransaction(): LiveData<List<Transaction>> = moneyManagerRepository.getAllTransaction()
-
+    fun getAllTransaction(typeTransaction: String): LiveData<List<Transaction>> =
+        moneyManagerRepository.getAllTransaction(typeTransaction)
 
 
 }

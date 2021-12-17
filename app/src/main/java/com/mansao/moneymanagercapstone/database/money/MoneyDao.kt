@@ -28,8 +28,8 @@ interface MoneyDao {
     @Delete
     fun deleteTransaction(transaction: Transaction)
 
-    @Query("SELECT * from `transaction` ORDER BY id ASC")
-    fun getAllTransaction(): LiveData<List<Transaction>>
+    @Query("SELECT * from `transaction` WHERE type_transaction = :typeTransaction ORDER BY id ASC")
+    fun getAllTransaction(typeTransaction: String): LiveData<List<Transaction>>
 
 //    @Query("SELECT SUM(income) FROM `transaction` WHERE type_transaction = :typeTransaction ")
 //    fun getIncome(typeTransaction: String)
