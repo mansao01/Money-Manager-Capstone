@@ -48,6 +48,7 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
         }
         val btnTitle: String
         if (isEdit) {
+            supportActionBar?.title = money?.title_note
             btnTitle = getString(R.string.update)
             if (money != null) {
                 money?.let { money ->
@@ -57,8 +58,9 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
             }
         } else {
             btnTitle = getString(R.string.save)
+            supportActionBar?.title = getString(R.string.add)
         }
-        supportActionBar?.title = money?.title_note
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding?.btnSubmit?.text = btnTitle
 

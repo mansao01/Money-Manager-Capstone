@@ -57,7 +57,8 @@ class MoneyManagerRepository(application: Application) {
     }
 
     fun updateTransaction(transaction: Transaction) {
-        executorService.execute { moneyDao.updateTransaction(transaction)
+        executorService.execute {
+            moneyDao.updateTransaction(transaction)
         }
     }
 
