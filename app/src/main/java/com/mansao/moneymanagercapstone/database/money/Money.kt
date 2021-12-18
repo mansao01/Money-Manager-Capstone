@@ -1,4 +1,4 @@
-package com.mansao.moneymanagercapstone.database
+package com.mansao.moneymanagercapstone.database.money
 
 import android.os.Parcelable
 import androidx.annotation.NonNull

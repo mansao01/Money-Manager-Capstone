@@ -2,12 +2,10 @@ package com.mansao.moneymanagercapstone.repository
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.paging.DataSource
-import com.mansao.moneymanagercapstone.database.Money
-import com.mansao.moneymanagercapstone.database.MoneyDao
-import com.mansao.moneymanagercapstone.database.MoneyDatabase
-import com.mansao.moneymanagercapstone.database.Transaction
-import com.mansao.moneymanagercapstone.helper.SortUtils
+import com.mansao.moneymanagercapstone.database.money.Money
+import com.mansao.moneymanagercapstone.database.money.MoneyDao
+import com.mansao.moneymanagercapstone.database.money.MoneyDatabase
+import com.mansao.moneymanagercapstone.database.money.Transaction
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -21,10 +19,7 @@ class MoneyManagerRepository(application: Application) {
 
 
     // money
-    fun getAllMoney(sort: String): DataSource.Factory<Int, Money> {
-        val query = SortUtils.getSortedQuery(sort)
-        return moneyDao.getAllMoney(query)
-    }
+    fun getAllMoney(): LiveData<List<Money>> = moneyDao.getAllMoney()
 
     fun insertMoney(note: Money) {
         executorService.execute { moneyDao.insertMoney(note) }
@@ -38,10 +33,8 @@ class MoneyManagerRepository(application: Application) {
 
     //transaction
 
-    fun getAllTransaction(sort: String): DataSource.Factory<Int, Transaction> {
-        val query = SortUtils.getSortedTransaction(sort)
-        return moneyDao.getAllTransaction(query)
-    }
+    fun getAllTransaction(typeTransaction: String): LiveData<List<Transaction>> =
+        moneyDao.getAllTransaction(typeTransaction)
 
     fun insertTransaction(transaction: Transaction){
         executorService.execute {
