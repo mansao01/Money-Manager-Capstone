@@ -46,10 +46,8 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
         } else {
             money = Money()
         }
-        val actionBarTitle: String
         val btnTitle: String
         if (isEdit) {
-            actionBarTitle = getString(R.string.change)
             btnTitle = getString(R.string.update)
             if (money != null) {
                 money?.let { money ->
@@ -58,10 +56,9 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
                 }
             }
         } else {
-            actionBarTitle = getString(R.string.add)
             btnTitle = getString(R.string.save)
         }
-        supportActionBar?.title = actionBarTitle
+        supportActionBar?.title = money?.title_note
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding?.btnSubmit?.text = btnTitle
 
@@ -100,13 +97,19 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
 
         val dataForTypeTransaction = money?.title_note
         transactionAddUpdateViewModel = obtainTransactionViewModel(this@MoneyAddUpdateActivity)
-        dataForTypeTransaction?.let { transactionAddUpdateViewModel.getAllTransaction(it).observe(this, transactionObserver) }
+        if (dataForTypeTransaction != null) {
+            transactionAddUpdateViewModel.getAllTransaction(dataForTypeTransaction)
+                .observe(this, transactionObserver)
 
-        val outcome = dataForTypeTransaction?.let { transactionAddUpdateViewModel.getOutcome(it) }
-        val income = dataForTypeTransaction?.let { transactionAddUpdateViewModel.getIncome(it) }
+            transactionAddUpdateViewModel.getOutcome(dataForTypeTransaction)
+                .observe(this, outcomeObserver)
 
-        binding?.tvTotalIncome?.text = income.toString()
-        binding?.tvTotalOutcome?.text = outcome.toString()
+            transactionAddUpdateViewModel.getIncome(dataForTypeTransaction)
+                .observe(this, incomeObserver)
+
+            transactionAddUpdateViewModel.getTotalMoney(dataForTypeTransaction)
+                .observe(this, totalMoneyObserver)
+        }
 
         adapterTransaction = TransactionAdapter(this@MoneyAddUpdateActivity)
         binding?.rvNotes?.layoutManager = LinearLayoutManager(this)
@@ -115,7 +118,8 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
 
         binding?.fabAddTransaction?.setOnClickListener { view ->
             if (view.id == R.id.fab_add_transaction) {
-                val intent = Intent(this@MoneyAddUpdateActivity, TransactionAddUpdateActivity::class.java)
+                val intent =
+                    Intent(this@MoneyAddUpdateActivity, TransactionAddUpdateActivity::class.java)
                 intent.putExtra(TransactionAddUpdateActivity.EXTRA_DATA, money)
                 startActivityForResult(intent, TransactionAddUpdateActivity.REQUEST_ADD)
             }
@@ -128,6 +132,7 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
         }
         return super.onCreateOptionsMenu(menu)
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_delete -> showAlertDialog(ALERT_DIALOG_DELETE)
@@ -135,6 +140,7 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
     override fun onBackPressed() {
         showAlertDialog(ALERT_DIALOG_CLOSE)
     }
@@ -208,6 +214,25 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
             adapterTransaction.setListTransaction(transactionList)
         }
     }
+
+    private val outcomeObserver = Observer<Int> { outcome ->
+        if (outcome != null) {
+            binding?.tvTotalOutcome?.text = "- ${outcome.toString()}"
+        }
+    }
+
+    private val incomeObserver = Observer<Int> { income ->
+        if (income != null) {
+            binding?.tvTotalIncome?.text = "+ ${income.toString()}"
+        }
+    }
+
+    private val totalMoneyObserver = Observer<Int> { totalMoney ->
+        if (totalMoney != null) {
+            binding?.tvTotalMoney?.text = "Total : ${totalMoney.toString()}"
+        }
+    }
+
     private fun showSnackbarMessage(message: String) {
         Snackbar.make(binding?.root as View, message, Snackbar.LENGTH_SHORT).show()
     }

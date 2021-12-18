@@ -33,15 +33,6 @@ class HomeActivity : AppCompatActivity() {
         homeViewModel = obtainViewModel(this@HomeActivity)
         homeViewModel.getAllMoney(SortUtils.NEWEST).observe(this, moneyObserver)
 
-//        mainViewModel.getAllMoney().observe(this, { list ->
-//            adapter.setListNotes(list)
-//            if (list.isNotEmpty()) {
-//                binding?.imgNull?.visibility = View.GONE
-//            } else {
-//                binding?.imgNull?.visibility = View.VISIBLE
-//            }
-//        })
-
         adapter = MoneyAdapter(this@HomeActivity)
 
         binding?.rvList?.layoutManager = LinearLayoutManager(this)
@@ -86,10 +77,14 @@ class HomeActivity : AppCompatActivity() {
     private fun showSnackbarMessage(message: String) {
         Snackbar.make(binding?.root as View, message, Snackbar.LENGTH_SHORT).show()
     }
+
     //menu main
-    private val moneyObserver = Observer<PagedList<Money>> { noteList ->
-        if (noteList != null) {
-            adapter.submitList(noteList)
+    private val moneyObserver = Observer<PagedList<Money>> { list ->
+        adapter.submitList(list)
+        if (list.isNotEmpty()) {
+            binding?.imgNull?.visibility = View.GONE
+        } else {
+            binding?.imgNull?.visibility = View.VISIBLE
         }
     }
 
@@ -97,6 +92,7 @@ class HomeActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         var sort = ""
         when (item.getItemId()) {

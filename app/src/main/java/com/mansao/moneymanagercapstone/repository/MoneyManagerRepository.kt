@@ -14,6 +14,7 @@ import java.util.concurrent.Executors
 class MoneyManagerRepository(application: Application) {
     private val moneyDao: MoneyDao
     private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
+
     init {
         val db = MoneyDatabase.getDatabase(application)
         moneyDao = db.moneyDao()
@@ -29,9 +30,11 @@ class MoneyManagerRepository(application: Application) {
     fun insertMoney(note: Money) {
         executorService.execute { moneyDao.insertMoney(note) }
     }
+
     fun deleteMoney(note: Money) {
         executorService.execute { moneyDao.deleteMoney(note) }
     }
+
     fun updateMoney(note: Money) {
         executorService.execute { moneyDao.updateMoney(note) }
     }
@@ -41,32 +44,27 @@ class MoneyManagerRepository(application: Application) {
     fun getAllTransaction(typeTransaction: String): LiveData<List<Transaction>> =
         moneyDao.getAllTransaction(typeTransaction)
 
-    fun insertTransaction(transaction: Transaction){
+    fun insertTransaction(transaction: Transaction) {
         executorService.execute {
             moneyDao.insertTransaction(transaction)
         }
     }
 
-    fun deleteTransaction(transaction: Transaction){
+    fun deleteTransaction(transaction: Transaction) {
         executorService.execute {
             moneyDao.deleteTransaction(transaction)
         }
     }
 
-    fun updateTransaction(transaction: Transaction){
+    fun updateTransaction(transaction: Transaction) {
         executorService.execute { moneyDao.updateTransaction(transaction)
         }
     }
 
-    fun getOutcome(typeTransaction: String){
-        executorService.execute {
-            moneyDao.getOutCome(typeTransaction)
-        }
-    }
+    fun getOutcome(typeTransaction: String): LiveData<Int> = moneyDao.getOutCome(typeTransaction)
 
-    fun getIncome(typeTransaction: String){
-        executorService.execute {
-            moneyDao.getIncome(typeTransaction )
-        }
-    }
+    fun getIncome(typeTransaction: String): LiveData<Int> = moneyDao.getIncome(typeTransaction)
+
+    fun getTotalMoney(typeTransaction: String): LiveData<Int> =
+        moneyDao.getTotalMoney(typeTransaction)
 }

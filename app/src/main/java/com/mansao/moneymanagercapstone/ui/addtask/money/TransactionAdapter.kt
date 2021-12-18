@@ -37,8 +37,8 @@ class TransactionAdapter internal constructor(private val activity: Activity) : 
                 tvItemTitle.text = transaction.title_transaction
                 tvItemDate.text = transaction.date_transaction
                 tvItemDescription.text = transaction.desc_transaction
-                tvItemIncome.text = transaction.income
-                tvItemOutcome.text = transaction.outcome
+                tvItemIncome.text = "+ ${transaction.income}"
+                tvItemOutcome.text = "- ${transaction.outcome}"
                 cvItemTransaction.setOnClickListener {
                     val intent = Intent(activity, TransactionAddUpdateActivity::class.java)
                     intent.putExtra(TransactionAddUpdateActivity.EXTRA_POSITION, adapterPosition)

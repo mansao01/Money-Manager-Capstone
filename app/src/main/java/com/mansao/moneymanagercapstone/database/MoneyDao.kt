@@ -41,4 +41,7 @@ interface MoneyDao {
 
     @Query("SELECT SUM(outcome) FROM `transaction` WHERE type_transaction = :typeTransaction")
     fun getOutCome(typeTransaction: String): LiveData<Int>
+
+    @Query("SELECT SUM(income) - SUM(outcome) FROM `transaction` WHERE type_transaction = :typeTransaction")
+    fun getTotalMoney(typeTransaction: String): LiveData<Int>
 }
