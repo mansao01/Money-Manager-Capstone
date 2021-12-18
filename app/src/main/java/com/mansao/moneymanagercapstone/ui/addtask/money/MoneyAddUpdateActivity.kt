@@ -101,12 +101,12 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
         val dataForTypeTransaction = money?.title_note
         transactionAddUpdateViewModel = obtainTransactionViewModel(this@MoneyAddUpdateActivity)
         dataForTypeTransaction?.let { transactionAddUpdateViewModel.getAllTransaction(it).observe(this, transactionObserver) }
-//
-//        val outcome = transactionAddUpdateViewModel.getOutcome(dataForTypeTransaction)
-//        val income = dataForTypeTransaction?.let { transactionAddUpdateViewModel.getIncome(it) }
-//
-//        binding?.tvTotalIncome?.text = income.toString()
-//        binding?.tvTotalOutcome?.text = outcome.toString()
+
+        val outcome = dataForTypeTransaction?.let { transactionAddUpdateViewModel.getOutcome(it) }
+        val income = dataForTypeTransaction?.let { transactionAddUpdateViewModel.getIncome(it) }
+
+        binding?.tvTotalIncome?.text = income.toString()
+        binding?.tvTotalOutcome?.text = outcome.toString()
 
         adapterTransaction = TransactionAdapter(this@MoneyAddUpdateActivity)
         binding?.rvNotes?.layoutManager = LinearLayoutManager(this)

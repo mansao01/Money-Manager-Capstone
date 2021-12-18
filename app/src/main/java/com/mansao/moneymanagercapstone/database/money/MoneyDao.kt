@@ -31,9 +31,9 @@ interface MoneyDao {
     @Query("SELECT * from `transaction` WHERE type_transaction = :typeTransaction ORDER BY id ASC")
     fun getAllTransaction(typeTransaction: String): LiveData<List<Transaction>>
 
-//    @Query("SELECT SUM(income) FROM `transaction` WHERE type_transaction = :typeTransaction ")
-//    fun getIncome(typeTransaction: String)
-//
-//    @Query("SELECT SUM(outcome) FROM `transaction` WHERE type_transaction = :typeTransaction")
-//    fun getOutCome(typeTransaction: String)
+    @Query("SELECT SUM(income) FROM `transaction` WHERE type_transaction = :typeTransaction ")
+    fun getIncome(typeTransaction: String): LiveData<Int>
+
+    @Query("SELECT SUM(outcome) FROM `transaction` WHERE type_transaction = :typeTransaction")
+    fun getOutCome(typeTransaction: String): LiveData<Int>
 }

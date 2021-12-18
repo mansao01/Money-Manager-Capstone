@@ -24,5 +24,12 @@ class TransactionAddUpdateViewModel(application: Application) : ViewModel() {
     fun getAllTransaction(typeTransaction: String): LiveData<List<Transaction>> =
         moneyManagerRepository.getAllTransaction(typeTransaction)
 
+    fun getOutcome(typeTransaction: String){
+        moneyManagerRepository.getOutcome(typeTransaction)
+    }
+
+    fun getIncome(typeTransaction: String){
+        moneyManagerRepository.getIncome(typeTransaction)
+    }
 
 }

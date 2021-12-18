@@ -53,4 +53,16 @@ class MoneyManagerRepository(application: Application) {
             moneyDao.updateTransaction(transaction)
         }
     }
+
+    fun getOutcome(typeTransaction: String){
+        executorService.execute {
+            moneyDao.getOutCome(typeTransaction)
+        }
+    }
+
+    fun getIncome(typeTransaction: String){
+        executorService.execute {
+            moneyDao.getIncome(typeTransaction )
+        }
+    }
 }
