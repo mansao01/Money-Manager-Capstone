@@ -1,9 +1,7 @@
-package com.mansao.moneymanagercapstone.database
+package com.mansao.moneymanagercapstone.database.money
 
 import androidx.lifecycle.LiveData
-import androidx.paging.DataSource
 import androidx.room.*
-import androidx.sqlite.db.SupportSQLiteQuery
 
 @Dao
 interface MoneyDao {
@@ -17,11 +15,8 @@ interface MoneyDao {
     @Delete
     fun deleteMoney(note: Money)
 
-    @RawQuery(observedEntities = [Money::class])
-    fun getAllMoney(query: SupportSQLiteQuery): DataSource.Factory<Int, Money>
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAll(list: List<Money>)
+    @Query("SELECT * from money ORDER BY id ASC")
+    fun getAllMoney(): LiveData<List<Money>>
 
     // transaction
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -33,11 +28,8 @@ interface MoneyDao {
     @Delete
     fun deleteTransaction(transaction: Transaction)
 
-    @RawQuery(observedEntities = [Transaction::class])
-    fun getAllTransaction(query: SupportSQLiteQuery): DataSource.Factory<Int, Transaction>
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAllTransaction(list: List<Transaction>)
+    @Query("SELECT * from `transaction` WHERE type_transaction = :typeTransaction ORDER BY id ASC")
+    fun getAllTransaction(typeTransaction: String): LiveData<List<Transaction>>
 
 //    @Query("SELECT SUM(income) FROM `transaction` WHERE type_transaction = :typeTransaction ")
 //    fun getIncome(typeTransaction: String)

@@ -12,7 +12,14 @@
         <activity
             android:name=".ui.addtask.transaction.TransactionAddUpdateActivity"
             android:exported="true"
-            android:label="@string/title_activity_transaction_add_update" />
+            android:label="@string/title_activity_transaction_add_update"
+            android:theme="@style/Theme.MoneyManagerCapstone.NoActionBar" />
+        <activity
+            android:name=".ui.addtransacation.TransactionAddUpdateActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.addtransacation.AddTransaction"
+            android:exported="false" />
         <activity
             android:name=".ui.addtask.money.MoneyAddUpdateActivity"
             android:exported="true" />
