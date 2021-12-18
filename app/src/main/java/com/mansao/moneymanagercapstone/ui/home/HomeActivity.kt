@@ -3,19 +3,26 @@ package com.mansao.moneymanagercapstone.ui.home
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mansao.capstonedraft.helper.ViewModelFactory
 import com.mansao.moneymanagercapstone.R
+import com.mansao.moneymanagercapstone.database.Money
 import com.mansao.moneymanagercapstone.databinding.ActivityHomeBinding
+import com.mansao.moneymanagercapstone.helper.SortUtils
 import com.mansao.moneymanagercapstone.ui.addtask.money.MoneyAddUpdateActivity
 
 class HomeActivity : AppCompatActivity() {
     private var _activityMainBinding: ActivityHomeBinding? = null
     private val binding get() = _activityMainBinding
     private lateinit var adapter: MoneyAdapter
+    private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,15 +30,17 @@ class HomeActivity : AppCompatActivity() {
         _activityMainBinding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        val mainViewModel = obtainViewModel(this@HomeActivity)
-        mainViewModel.getAllNotes().observe(this, { list ->
-            adapter.setListNotes(list)
-            if (list.isNotEmpty()) {
-                binding?.imgNull?.visibility = View.GONE
-            } else {
-                binding?.imgNull?.visibility = View.VISIBLE
-            }
-        })
+        homeViewModel = obtainViewModel(this@HomeActivity)
+        homeViewModel.getAllMoney(SortUtils.NEWEST).observe(this, moneyObserver)
+
+//        mainViewModel.getAllMoney().observe(this, { list ->
+//            adapter.setListNotes(list)
+//            if (list.isNotEmpty()) {
+//                binding?.imgNull?.visibility = View.GONE
+//            } else {
+//                binding?.imgNull?.visibility = View.VISIBLE
+//            }
+//        })
 
         adapter = MoneyAdapter(this@HomeActivity)
 
@@ -76,5 +85,27 @@ class HomeActivity : AppCompatActivity() {
 
     private fun showSnackbarMessage(message: String) {
         Snackbar.make(binding?.root as View, message, Snackbar.LENGTH_SHORT).show()
+    }
+    //menu main
+    private val moneyObserver = Observer<PagedList<Money>> { noteList ->
+        if (noteList != null) {
+            adapter.submitList(noteList)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        var sort = ""
+        when (item.getItemId()) {
+            R.id.action_newest -> sort = SortUtils.NEWEST
+            R.id.action_oldest -> sort = SortUtils.OLDEST
+            R.id.action_random -> sort = SortUtils.RANDOM
+        }
+        homeViewModel.getAllMoney(sort).observe(this, moneyObserver)
+        item.setChecked(true)
+        return super.onOptionsItemSelected(item)
     }
 }

@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mansao.capstonedraft.helper.ViewModelFactory
 import com.mansao.moneymanagercapstone.R
-import com.mansao.moneymanagercapstone.database.money.Money
-import com.mansao.moneymanagercapstone.database.money.Transaction
+import com.mansao.moneymanagercapstone.database.Money
+import com.mansao.moneymanagercapstone.database.Transaction
 import com.mansao.moneymanagercapstone.databinding.ActivityMoneyAddUpdateBinding
 import com.mansao.moneymanagercapstone.helper.DateHelper
 import com.mansao.moneymanagercapstone.ui.addtask.transaction.TransactionAddUpdateActivity
