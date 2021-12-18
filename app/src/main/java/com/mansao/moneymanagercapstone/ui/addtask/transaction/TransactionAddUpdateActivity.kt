@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.mansao.capstonedraft.helper.ViewModelFactory
 import com.mansao.moneymanagercapstone.R
-import com.mansao.moneymanagercapstone.database.money.Money
-import com.mansao.moneymanagercapstone.database.money.Transaction
+import com.mansao.moneymanagercapstone.database.Money
+import com.mansao.moneymanagercapstone.database.Transaction
 import com.mansao.moneymanagercapstone.databinding.ActivityTransactionAddUpdateBinding
 import com.mansao.moneymanagercapstone.helper.DateHelper
 

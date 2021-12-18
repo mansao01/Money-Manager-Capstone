@@ -1,7 +1,7 @@
 package com.mansao.moneymanagercapstone.helper.money
 
 import androidx.recyclerview.widget.DiffUtil
-import com.mansao.moneymanagercapstone.database.money.Money
+import com.mansao.moneymanagercapstone.database.Money
 
 class MoneyDiffCallback (private val mOldNoteList: List<Money>, private val mNewNoteList: List<Money>) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
