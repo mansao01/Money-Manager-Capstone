@@ -30,9 +30,11 @@ class TransactionAddUpdateActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        _activityTransactionAddUpdateBinding = ActivityTransactionAddUpdateBinding.inflate(layoutInflater)
+        _activityTransactionAddUpdateBinding =
+            ActivityTransactionAddUpdateBinding.inflate(layoutInflater)
         setContentView(binding?.root)
-        transactionAddUpdateViewModel = obtainTransactionViewModel(this@TransactionAddUpdateActivity)
+        transactionAddUpdateViewModel =
+            obtainTransactionViewModel(this@TransactionAddUpdateActivity)
 
         transaction = intent.getParcelableExtra(EXTRA_NOTE)
         if (transaction != null) {
@@ -72,9 +74,9 @@ class TransactionAddUpdateActivity : AppCompatActivity() {
                 binding?.edtTitle?.error = getString(R.string.empty)
             } else if (desc.isEmpty()) {
                 binding?.edtDescription?.error = getString(R.string.empty)
-            } else if (income.isEmpty()){
+            } else if (income.isEmpty()) {
                 binding?.edtIncome?.error = getString(R.string.empty)
-            } else if (outcome.isEmpty()){
+            } else if (outcome.isEmpty()) {
                 binding?.edtOutcome?.error = getString(R.string.empty)
             } else {
                 transaction.let { transaction ->
@@ -82,7 +84,7 @@ class TransactionAddUpdateActivity : AppCompatActivity() {
                     transaction?.desc_transaction = desc
                     transaction?.income = income
                     transaction?.outcome = outcome
-                    transaction?.typeTransaction= dataTypeTransaction?.title_note
+                    transaction?.typeTransaction = dataTypeTransaction?.title_note
                 }
                 val intent = Intent().apply {
                     putExtra(EXTRA_NOTE, transaction)
@@ -110,6 +112,7 @@ class TransactionAddUpdateActivity : AppCompatActivity() {
         }
         return super.onCreateOptionsMenu(menu)
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_delete -> showAlertDialog(ALERT_DIALOG_DELETE)
@@ -117,6 +120,7 @@ class TransactionAddUpdateActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
     override fun onBackPressed() {
         showAlertDialog(ALERT_DIALOG_CLOSE)
     }

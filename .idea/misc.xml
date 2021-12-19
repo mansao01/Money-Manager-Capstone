@@ -19,11 +19,14 @@
         <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/layout/activity_main.xml" value="0.10054347826086957" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/layout/activity_money_add_update.xml" value="0.2" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/layout/activity_setting.xml" value="0.14492753623188406" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/layout/activity_splash.xml" value="0.1503623188405797" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/layout/activity_transaction_add_update.xml" value="0.1503623188405797" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/layout/item_note.xml" value="0.1" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/layout/list_items.xml" value="0.18" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/menu/menu_form.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/menu/menu_main.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/xml/root_preference.xml" value="0.14492753623188406" />
       </map>
     </option>
   </component>

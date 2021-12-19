@@ -6,17 +6,22 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagedList
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mansao.capstonedraft.helper.ViewModelFactory
 import com.mansao.moneymanagercapstone.R
 import com.mansao.moneymanagercapstone.database.Money
 import com.mansao.moneymanagercapstone.databinding.ActivityHomeBinding
+import com.mansao.moneymanagercapstone.helper.DarkMode
 import com.mansao.moneymanagercapstone.helper.SortUtils
 import com.mansao.moneymanagercapstone.ui.addtask.money.MoneyAddUpdateActivity
+import com.mansao.moneymanagercapstone.ui.setting.SettingActivity
+import java.util.*
 
 class HomeActivity : AppCompatActivity() {
     private var _activityMainBinding: ActivityHomeBinding? = null
@@ -44,6 +49,15 @@ class HomeActivity : AppCompatActivity() {
                 val intent = Intent(this@HomeActivity, MoneyAddUpdateActivity::class.java)
                 startActivityForResult(intent, MoneyAddUpdateActivity.REQUEST_ADD)
             }
+        }
+
+        val preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        preferences.getString(
+            getString(R.string.pref_key_dark),
+            getString(R.string.pref_dark_follow_system)
+        )?.apply {
+            val mode = DarkMode.valueOf(this.uppercase(Locale.US))
+            AppCompatDelegate.setDefaultNightMode(mode.value)
         }
     }
 
@@ -78,7 +92,6 @@ class HomeActivity : AppCompatActivity() {
         Snackbar.make(binding?.root as View, message, Snackbar.LENGTH_SHORT).show()
     }
 
-    //menu main
     private val moneyObserver = Observer<PagedList<Money>> { list ->
         adapter.submitList(list)
         if (list.isNotEmpty()) {
@@ -95,10 +108,14 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         var sort = ""
-        when (item.getItemId()) {
+        when (item.itemId) {
             R.id.action_newest -> sort = SortUtils.NEWEST
             R.id.action_oldest -> sort = SortUtils.OLDEST
             R.id.action_random -> sort = SortUtils.RANDOM
+            R.id.action_setting ->{
+                val intentToSetting = Intent(this, SettingActivity::class.java)
+                startActivity(intentToSetting)
+            }
         }
         homeViewModel.getAllMoney(sort).observe(this, moneyObserver)
         item.setChecked(true)

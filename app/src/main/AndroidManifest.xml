@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MoneyManagerCapstone">
         <activity
+            android:name=".ui.setting.SettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.addtask.transaction.TransactionAddUpdateActivity"
             android:exported="true"
             android:label="@string/title_activity_transaction_add_update" />
