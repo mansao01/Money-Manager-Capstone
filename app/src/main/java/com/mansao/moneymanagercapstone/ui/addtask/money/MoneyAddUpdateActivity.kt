@@ -5,18 +5,21 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayoutMediator
 import com.mansao.capstonedraft.helper.ViewModelFactory
 import com.mansao.moneymanagercapstone.R
 import com.mansao.moneymanagercapstone.database.Money
 import com.mansao.moneymanagercapstone.database.Transaction
 import com.mansao.moneymanagercapstone.databinding.ActivityMoneyAddUpdateBinding
 import com.mansao.moneymanagercapstone.helper.DateHelper
+import com.mansao.moneymanagercapstone.helper.SectionPagerAdapter
 import com.mansao.moneymanagercapstone.ui.addtask.transaction.TransactionAddUpdateActivity
 import com.mansao.moneymanagercapstone.ui.addtask.transaction.TransactionAddUpdateViewModel
 
@@ -100,8 +103,6 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
         val dataForTypeTransaction = money?.titleMoney
         transactionAddUpdateViewModel = obtainTransactionViewModel(this@MoneyAddUpdateActivity)
         if (dataForTypeTransaction != null) {
-            transactionAddUpdateViewModel.getAllTransaction(dataForTypeTransaction)
-                .observe(this, transactionObserver)
 
             transactionAddUpdateViewModel.getOutcome(dataForTypeTransaction)
                 .observe(this, outcomeObserver)
@@ -113,10 +114,16 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
                 .observe(this, totalMoneyObserver)
         }
 
-        adapterTransaction = TransactionAdapter(this@MoneyAddUpdateActivity)
-        binding?.rvNotes?.layoutManager = LinearLayoutManager(this)
-        binding?.rvNotes?.setHasFixedSize(true)
-        binding?.rvNotes?.adapter = adapterTransaction
+        val bundle = Bundle()
+        bundle.putString(EXTRA_NOTE, dataForTypeTransaction)
+        val sectionPagerAdapter = SectionPagerAdapter(this, bundle)
+
+        binding?.apply {
+            viewPager.adapter = sectionPagerAdapter
+            TabLayoutMediator(tabs, viewPager){tab, position ->
+                tab.text = resources.getString(TAB_TITLES[position])
+            }.attach()
+        }
 
         binding?.fabAddTransaction?.setOnClickListener { view ->
             if (view.id == R.id.fab_add_transaction) {
@@ -249,5 +256,14 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
         const val RESULT_DELETE = 301
         const val ALERT_DIALOG_CLOSE = 10
         const val ALERT_DIALOG_DELETE = 20
+
+        @StringRes
+        private val TAB_TITLES = intArrayOf(
+            R.string.all_transaction,
+            R.string.daily_transaction,
+            R.string.weekly_transaction,
+            R.string.month_transaction,
+            R.string.year_transaction
+        )
     }
 }
