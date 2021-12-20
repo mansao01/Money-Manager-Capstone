@@ -84,7 +84,7 @@ class TransactionAddUpdateActivity : AppCompatActivity() {
                     transaction?.desc_transaction = desc
                     transaction?.income = income
                     transaction?.outcome = outcome
-                    transaction?.typeTransaction = dataTypeTransaction?.title_note
+                    transaction?.typeTransaction = dataTypeTransaction?.titleMoney
                 }
                 val intent = Intent().apply {
                     putExtra(EXTRA_NOTE, transaction)

@@ -9,6 +9,22 @@ import com.mansao.moneymanagercapstone.ui.home.HomeViewModel
 
 class ViewModelFactory private constructor(private val mApplication: Application) : ViewModelProvider.NewInstanceFactory() {
 
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return when {
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
+                HomeViewModel(mApplication) as T
+            }
+            modelClass.isAssignableFrom(MoneyAddUpdateViewModel::class.java) -> {
+                MoneyAddUpdateViewModel(mApplication) as T
+            }
+            modelClass.isAssignableFrom(TransactionAddUpdateViewModel::class.java) -> {
+                TransactionAddUpdateViewModel(mApplication) as T
+            }
+            else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
+        }
+    }
+
     companion object {
         @Volatile
         private var INSTANCE: ViewModelFactory? = null
@@ -22,27 +38,5 @@ class ViewModelFactory private constructor(private val mApplication: Application
             }
             return INSTANCE as ViewModelFactory
         }
-    }
-
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-            return HomeViewModel(mApplication) as T
-        } else if (modelClass.isAssignableFrom(MoneyAddUpdateViewModel::class.java)) {
-            return MoneyAddUpdateViewModel(mApplication) as T
-        } else if (modelClass.isAssignableFrom(TransactionAddUpdateViewModel::class.java))
-            return TransactionAddUpdateViewModel(mApplication) as T
-        throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
-//        return when {
-//            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
-//                HomeViewModel(mApplication) as T
-//            }
-//            modelClass.isAssignableFrom(MoneyAddUpdateViewModel::class.java) -> {
-//                MoneyAddUpdateViewModel(mApplication) as T
-//            }
-//            modelClass.isAssignableFrom(TransactionAddUpdateViewModel::class.java) -> {
-//                TransactionAddUpdateViewModel(mApplication) as T
-//            }
-//            else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
-//        }
     }
 }

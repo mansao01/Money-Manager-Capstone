@@ -3,16 +3,22 @@ package com.mansao.moneymanagercapstone.helper.transaction
 import androidx.recyclerview.widget.DiffUtil
 import com.mansao.moneymanagercapstone.database.Transaction
 
-class TransactionDiffCallback (private val mOldTransactionList: List<Transaction>, private val mNewTransactionList: List<Transaction>) : DiffUtil.Callback() {
+class TransactionDiffCallback(
+    private val mOldTransactionList: List<Transaction>,
+    private val mNewTransactionList: List<Transaction>
+) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         return mOldTransactionList.size
     }
+
     override fun getNewListSize(): Int {
         return mNewTransactionList.size
     }
+
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         return mOldTransactionList[oldItemPosition].id == mNewTransactionList[newItemPosition].id
     }
+
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         val oldEmployee = mOldTransactionList[oldItemPosition]
         val newEmployee = mNewTransactionList[newItemPosition]

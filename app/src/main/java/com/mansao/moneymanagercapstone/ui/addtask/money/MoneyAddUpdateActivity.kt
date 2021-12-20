@@ -48,12 +48,12 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
         }
         val btnTitle: String
         if (isEdit) {
-            supportActionBar?.title = money?.title_note
+            supportActionBar?.title = money?.titleMoney
             btnTitle = getString(R.string.update)
             if (money != null) {
                 money?.let { money ->
-                    binding?.edtTitle?.setText(money.title_note)
-                    binding?.edtDescription?.setText(money.desc_note)
+                    binding?.edtTitle?.setText(money.titleMoney)
+                    binding?.edtDescription?.setText(money.titleMoney)
                 }
             }
         } else {
@@ -74,8 +74,8 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
                 binding?.edtDescription?.error = getString(R.string.empty)
             } else {
                 money.let { money ->
-                    money?.title_note = title
-                    money?.desc_note = desc
+                    money?.titleMoney = title
+                    money?.descMoney = desc
                 }
                 val intent = Intent().apply {
                     putExtra(EXTRA_NOTE, money)
@@ -87,7 +87,7 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
                     finish()
                 } else {
                     money.let { money ->
-                        money?.date_note = DateHelper.getCurrentDate()
+                        money?.dateMoney = DateHelper.getCurrentDate()
                     }
                     moneyAddUpdateViewModel.insert(money as Money)
                     setResult(RESULT_ADD, intent)
@@ -97,7 +97,7 @@ class MoneyAddUpdateActivity : AppCompatActivity() {
         }
 
 
-        val dataForTypeTransaction = money?.title_note
+        val dataForTypeTransaction = money?.titleMoney
         transactionAddUpdateViewModel = obtainTransactionViewModel(this@MoneyAddUpdateActivity)
         if (dataForTypeTransaction != null) {
             transactionAddUpdateViewModel.getAllTransaction(dataForTypeTransaction)

@@ -14,13 +14,13 @@ data class Money(
     @ColumnInfo(name = "id")
     var id: Int = 0,
 
-    @ColumnInfo(name ="title_note")
-    var title_note: String? = null,
+    @ColumnInfo(name ="title_money")
+    var titleMoney: String? = null,
 
-    @ColumnInfo(name = "description_note")
-    var desc_note: String? = null,
+    @ColumnInfo(name = "description_money")
+    var descMoney: String? = null,
 
-    @ColumnInfo(name = "date_note")
-    var date_note: String? = null,
+    @ColumnInfo(name = "date_money")
+    var dateMoney: String? = null,
 
 ) : Parcelable

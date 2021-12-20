@@ -112,7 +112,7 @@ class HomeActivity : AppCompatActivity() {
             R.id.action_newest -> sort = SortUtils.NEWEST
             R.id.action_oldest -> sort = SortUtils.OLDEST
             R.id.action_random -> sort = SortUtils.RANDOM
-            R.id.action_setting ->{
+            R.id.action_setting -> {
                 val intentToSetting = Intent(this, SettingActivity::class.java)
                 startActivity(intentToSetting)
             }

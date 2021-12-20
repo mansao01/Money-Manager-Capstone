@@ -8,7 +8,7 @@ import androidx.paging.PagedList
 import com.mansao.moneymanagercapstone.database.Money
 import com.mansao.moneymanagercapstone.repository.MoneyManagerRepository
 
-class HomeViewModel (application: Application) : ViewModel() {
+class HomeViewModel(application: Application) : ViewModel() {
     private val moneyManagerRepository: MoneyManagerRepository = MoneyManagerRepository(application)
     fun getAllMoney(sort: String): LiveData<PagedList<Money>> {
         return LivePagedListBuilder(moneyManagerRepository.getAllMoney(sort), 20).build()
