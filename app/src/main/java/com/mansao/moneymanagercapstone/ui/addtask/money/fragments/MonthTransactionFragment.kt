@@ -5,56 +5,58 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.mansao.capstonedraft.helper.ViewModelFactory
 import com.mansao.moneymanagercapstone.R
+import com.mansao.moneymanagercapstone.databinding.FragmentMonthTransactionBinding
+import com.mansao.moneymanagercapstone.helper.DateHelper
+import com.mansao.moneymanagercapstone.ui.addtask.money.MoneyAddUpdateActivity
+import com.mansao.moneymanagercapstone.ui.addtask.money.TransactionAdapter
+import com.mansao.moneymanagercapstone.ui.addtask.transaction.TransactionAddUpdateViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MonthTransactionFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MonthTransactionFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentMonthTransactionBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var adapter : TransactionAdapter
+    private lateinit var viewModel: TransactionAddUpdateViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_month_transaction, container, false)
+        _binding = FragmentMonthTransactionBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MonthTransactionFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MonthTransactionFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        getMonthTransaction()
+    }
+
+    private fun getMonthTransaction(){
+        val dataForTypeTransaction = arguments?.getString(MoneyAddUpdateActivity.EXTRA_NOTE)
+        val thisMonth = DateHelper.getMonth()
+
+        viewModel = obtainViewModel(activity as AppCompatActivity)
+        if (dataForTypeTransaction != null){
+            viewModel.getMonthTransaction(dataForTypeTransaction, thisMonth)
+                .observe(viewLifecycleOwner, {transactionList ->
+                    adapter.setListTransaction(transactionList)
+                })
+        }
+
+        adapter = TransactionAdapter(activity as AppCompatActivity)
+        binding.rvMonthTransaction.layoutManager = LinearLayoutManager(activity)
+        binding.rvMonthTransaction.setHasFixedSize(true)
+        binding.rvMonthTransaction.adapter = adapter
+    }
+
+    private fun obtainViewModel(activity: AppCompatActivity): TransactionAddUpdateViewModel{
+        val factory = ViewModelFactory.getInstance(activity.application)
+        return ViewModelProvider(activity, factory).get(TransactionAddUpdateViewModel::class.java)
     }
 }

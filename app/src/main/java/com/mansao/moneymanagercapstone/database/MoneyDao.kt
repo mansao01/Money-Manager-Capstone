@@ -36,6 +36,18 @@ interface MoneyDao {
     @Query("SELECT * from `transaction` WHERE type_transaction = :typeTransaction ORDER BY id ASC")
     fun getAllTransaction(typeTransaction: String): LiveData<List<Transaction>>
 
+    @Query("SELECT * FROM `transaction` WHERE (type_transaction = :typeTransaction) & (date_transaction = :today) ORDER BY id ASC")
+    fun getTodayTransaction(typeTransaction: String, today: String): LiveData<List<Transaction>>
+
+    @Query("SELECT * FROM `transaction` WHERE (type_transaction = :typeTransaction) & (week_transaction = :week) ORDER BY id ASC")
+    fun getWeekTransaction(typeTransaction: String, week: String): LiveData<List<Transaction>>
+
+    @Query("SELECT * FROM `transaction` WHERE (type_transaction = :typeTransaction) & (month_transaction = :month) ORDER BY id ASC")
+    fun getMonthTransaction(typeTransaction: String, month: String): LiveData<List<Transaction>>
+
+    @Query("SELECT * FROM `transaction` WHERE (type_transaction = :typeTransaction) & (year_transaction = :year) ORDER BY id ASC")
+    fun getYearTransaction(typeTransaction: String, year: String): LiveData<List<Transaction>>
+
     @Query("SELECT SUM(income) FROM `transaction` WHERE type_transaction = :typeTransaction ")
     fun getIncome(typeTransaction: String): LiveData<Int>
 

@@ -22,6 +22,15 @@ data class Transaction (
     @ColumnInfo(name = "date_transaction")
     var date_transaction: String? = null,
 
+    @ColumnInfo(name = "week_transaction")
+    var weekTransaction: String? = null,
+
+    @ColumnInfo(name = "month_transaction")
+    var monthTransaction: String? = null,
+
+    @ColumnInfo(name = "year_transaction")
+    var yearTransaction: String? = null,
+
     @ColumnInfo(name = "income")
     var income: String? = null,
 

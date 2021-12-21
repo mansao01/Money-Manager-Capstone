@@ -44,6 +44,18 @@ class MoneyManagerRepository(application: Application) {
     fun getAllTransaction(typeTransaction: String): LiveData<List<Transaction>> =
         moneyDao.getAllTransaction(typeTransaction)
 
+    fun getTodayTransaction(typeTransaction: String, today: String): LiveData<List<Transaction>> =
+        moneyDao.getTodayTransaction(typeTransaction, today)
+
+    fun getWeekTransaction(typeTransaction: String, week: String): LiveData<List<Transaction>> =
+        moneyDao.getWeekTransaction(typeTransaction, week)
+
+    fun getMonthTransaction(typeTransaction: String, month: String): LiveData<List<Transaction>> =
+        moneyDao.getMonthTransaction(typeTransaction, month)
+
+    fun getYearTransaction(typeTransaction: String, year: String): LiveData<List<Transaction>> =
+        moneyDao.getYearTransaction(typeTransaction, year)
+
     fun insertTransaction(transaction: Transaction) {
         executorService.execute {
             moneyDao.insertTransaction(transaction)

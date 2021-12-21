@@ -24,6 +24,10 @@
         <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/layout/activity_transaction_add_update.xml" value="0.1503623188405797" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/layout/fragment_all_transaction.xml" value="0.12092391304347826" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/layout/fragment_day.xml" value="0.12092391304347826" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/layout/fragment_day_transaction.xml" value="0.1" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/layout/fragment_month_transaction.xml" value="0.1105072463768116" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/layout/fragment_week_transaction.xml" value="0.1105072463768116" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/layout/fragment_year_transaction.xml" value="0.1105072463768116" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/layout/item_note.xml" value="0.1" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/layout/list_items.xml" value="0.18" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/MoneyManagerCapstone/app/src/main/res/menu/menu_form.xml" value="0.19166666666666668" />

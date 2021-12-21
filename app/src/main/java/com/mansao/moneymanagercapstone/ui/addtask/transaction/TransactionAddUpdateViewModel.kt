@@ -24,6 +24,18 @@ class TransactionAddUpdateViewModel(application: Application) : ViewModel() {
     fun getAllTransaction(typeTransaction: String): LiveData<List<Transaction>> =
         moneyManagerRepository.getAllTransaction(typeTransaction)
 
+    fun getTodayTransaction(typeTransaction: String, today: String): LiveData<List<Transaction>> =
+        moneyManagerRepository.getTodayTransaction(typeTransaction, today)
+
+    fun getWeekTransaction(typeTransaction: String, week: String): LiveData<List<Transaction>> =
+        moneyManagerRepository.getWeekTransaction(typeTransaction, week)
+
+    fun getMonthTransaction(typeTransaction: String, month: String): LiveData<List<Transaction>> =
+        moneyManagerRepository.getMonthTransaction(typeTransaction, month)
+
+    fun getYearTransaction(typeTransaction: String, year: String): LiveData<List<Transaction>> =
+        moneyManagerRepository.getYearTransaction(typeTransaction, year)
+
     fun getOutcome(typeTransaction: String): LiveData<Int> =
         moneyManagerRepository.getOutcome(typeTransaction)
 

@@ -97,6 +97,9 @@ class TransactionAddUpdateActivity : AppCompatActivity() {
                 } else {
                     transaction.let { transaction ->
                         transaction?.date_transaction = DateHelper.getCurrentDate()
+                        transaction?.weekTransaction = DateHelper.getWeek()
+                        transaction?.monthTransaction = DateHelper.getMonth()
+                        transaction?.yearTransaction = DateHelper.getYear()
                     }
                     transactionAddUpdateViewModel.insert(transaction as Transaction)
                     setResult(RESULT_ADD, intent)
