@@ -12,4 +12,5 @@
     <color name="more_green_darker">#03A500</color>
     <color name="red">#FF0000</color>
     <color name="background_list">#FAFAFA</color>
+    <color name="lightest_green">#E7FFDF</color>
 </resources>

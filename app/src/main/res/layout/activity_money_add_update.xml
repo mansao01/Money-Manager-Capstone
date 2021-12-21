@@ -116,8 +116,7 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
-            android:background="@color/green"
-            app:tabTextColor="@color/white"
+            app:tabTextColor="@color/green"
             app:tabIndicatorColor="@color/green_darker"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
