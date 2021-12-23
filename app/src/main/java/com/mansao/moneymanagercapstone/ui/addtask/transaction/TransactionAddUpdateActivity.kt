@@ -45,6 +45,7 @@ class TransactionAddUpdateActivity : AppCompatActivity() {
         }
         val actionBarTitle: String
         val btnTitle: String
+
         if (isEdit) {
             actionBarTitle = getString(R.string.change)
             btnTitle = getString(R.string.update)
