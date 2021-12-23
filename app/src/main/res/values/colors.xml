@@ -13,4 +13,6 @@
     <color name="red">#FF0000</color>
     <color name="background_list">#FAFAFA</color>
     <color name="lightest_green">#E7FFDF</color>
+    <color name="almostBlack">#222</color>
+    <color name="orange">#FF8c00</color>
 </resources>
