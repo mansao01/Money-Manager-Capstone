@@ -59,4 +59,6 @@
     <string name="weekly_transaction">Week</string>
     <string name="month_transaction">Month</string>
     <string name="year_transaction">Year</string>
+    <string name="calculate">Calculate</string>
+    <string name="selisih">selisih</string>
 </resources>

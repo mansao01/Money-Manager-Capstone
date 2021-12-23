@@ -2,6 +2,8 @@ package com.mansao.moneymanagercapstone.ui.addtask.transaction
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.mansao.capstonedraft.helper.ViewModelFactory
@@ -10,6 +12,7 @@ import com.mansao.moneymanagercapstone.database.Money
 import com.mansao.moneymanagercapstone.database.Transaction
 import com.mansao.moneymanagercapstone.databinding.ActivityTransactionAddUpdateBinding
 import com.mansao.moneymanagercapstone.helper.DateHelper
+import com.mansao.moneymanagercapstone.ui.calculator.CalculatorActivity
 
 class TransactionAddUpdateActivity : AppCompatActivity() {
 
@@ -103,6 +106,21 @@ class TransactionAddUpdateActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_calculate, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.action_calculator ->{
+                val intent = Intent(this, CalculatorActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 
