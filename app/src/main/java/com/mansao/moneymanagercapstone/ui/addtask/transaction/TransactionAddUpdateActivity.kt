@@ -1,14 +1,9 @@
 package com.mansao.moneymanagercapstone.ui.addtask.transaction
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.snackbar.Snackbar
 import com.mansao.capstonedraft.helper.ViewModelFactory
 import com.mansao.moneymanagercapstone.R
 import com.mansao.moneymanagercapstone.database.Money
@@ -47,8 +42,8 @@ class TransactionAddUpdateActivity : AppCompatActivity() {
         val btnTitle: String
 
         if (isEdit) {
-            actionBarTitle = getString(R.string.change)
-            btnTitle = getString(R.string.update)
+            actionBarTitle = transaction?.title_transaction.toString()
+            btnTitle = getString(R.string.delete)
             if (transaction != null) {
                 transaction?.let { transaction ->
                     binding?.edtTitle?.setText(transaction.title_transaction)
@@ -110,23 +105,10 @@ class TransactionAddUpdateActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        if (isEdit) {
-            menuInflater.inflate(R.menu.menu_form, menu)
-        }
-        return super.onCreateOptionsMenu(menu)
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_delete -> showAlertDialog(ALERT_DIALOG_DELETE)
-            android.R.id.home -> showAlertDialog(ALERT_DIALOG_CLOSE)
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onBackPressed() {
-        showAlertDialog(ALERT_DIALOG_CLOSE)
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
     }
 
     override fun onDestroy() {
@@ -134,36 +116,6 @@ class TransactionAddUpdateActivity : AppCompatActivity() {
         _activityTransactionAddUpdateBinding = null
     }
 
-    private fun showAlertDialog(type: Int) {
-        val isDialogClose = type == ALERT_DIALOG_CLOSE
-        val dialogTitle: String
-        val dialogMessage: String
-        if (isDialogClose) {
-            dialogTitle = getString(R.string.cancel)
-            dialogMessage = getString(R.string.message_cancel)
-        } else {
-            dialogMessage = getString(R.string.message_delete)
-            dialogTitle = getString(R.string.delete)
-        }
-        val alertDialogBuilder = AlertDialog.Builder(this)
-        with(alertDialogBuilder) {
-            setTitle(dialogTitle)
-            setMessage(dialogMessage)
-            setCancelable(false)
-            setPositiveButton(getString(R.string.yes)) { _, _ ->
-                if (!isDialogClose) {
-                    transactionAddUpdateViewModel.delete(transaction as Transaction)
-                    val intent = Intent()
-                    intent.putExtra(EXTRA_POSITION, position)
-                    setResult(RESULT_DELETE, intent)
-                }
-                finish()
-            }
-            setNegativeButton(getString(R.string.no)) { dialog, _ -> dialog.cancel() }
-        }
-        val alertDialog = alertDialogBuilder.create()
-        alertDialog.show()
-    }
 
     private fun obtainTransactionViewModel(activity: AppCompatActivity): TransactionAddUpdateViewModel {
         val factory = ViewModelFactory.getInstance(activity.application)
@@ -179,8 +131,6 @@ class TransactionAddUpdateActivity : AppCompatActivity() {
         const val REQUEST_UPDATE = 200
         const val RESULT_UPDATE = 201
         const val RESULT_DELETE = 301
-        const val ALERT_DIALOG_CLOSE = 10
-        const val ALERT_DIALOG_DELETE = 20
     }
 
 }
