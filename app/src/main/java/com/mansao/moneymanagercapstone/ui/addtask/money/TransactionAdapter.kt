@@ -13,24 +13,30 @@ import com.mansao.moneymanagercapstone.ui.addtask.transaction.TransactionAddUpda
 
 class TransactionAdapter internal constructor(private val activity: Activity) : RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
     private val listTransaction = ArrayList<Transaction>()
+
     fun setListTransaction(listTransaction: List<Transaction>) {
         val diffCallback = TransactionDiffCallback(this.listTransaction, listTransaction)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
+
         this.listTransaction.clear()
         this.listTransaction.addAll(listTransaction)
         this.notifyDataSetChanged()
         diffResult.dispatchUpdatesTo(this)
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
         val binding = ListItemsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TransactionViewHolder(binding)
     }
+
     override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
         holder.bind(listTransaction[position])
     }
+
     override fun getItemCount(): Int {
         return listTransaction.size
     }
+
     inner class TransactionViewHolder(private val binding: ListItemsBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(transaction: Transaction) {
             with(binding) {
